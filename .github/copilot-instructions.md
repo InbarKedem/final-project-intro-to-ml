@@ -40,3 +40,21 @@ Build a predictive model to classify transfers as "On-Time" or "Delayed (>30 min
 all imports should be in the first code cell, and the notebook should be structured in a way that allows for easy navigation through the different sections.
 
 run all cells one by one to ensure that the notebook executes without errors and that all outputs are generated as expected.
+
+# Machine Learning Preprocessing Rules
+
+When generating code for data preprocessing, cleaning, or feature engineering:
+
+1. **No manual pandas scripts:** Do not apply sequential `.fillna()`, `.clip()`, or `.drop()` operations directly on dataframes in the notebook cells.
+2. **Use TransformerMixin:** Always wrap preprocessing steps (like winsorization, log1p scaling, or dropping columns) in custom Scikit-Learn classes that inherit from `sklearn.base.BaseEstimator` and `sklearn.base.TransformerMixin`.
+3. **Prevent Data Leakage:** Ensure parameters (like quantiles for outliers) are calculated _only_ in the `fit()` method and applied in the `transform()` method.
+4. **Use Pipelines:** Always integrate these custom transformers into an `sklearn.pipeline.Pipeline` or `ColumnTransformer`.
+
+# Model Training & Evaluation Rules
+
+When generating code for model training, hyperparameter tuning, or evaluation:
+
+1. **Strict Pipeline Cross-Validation:** Always pass the _entire_ preprocessing `Pipeline` into `GridSearchCV`, `RandomizedSearchCV`, or `cross_val_score`. Never apply the pipeline to the whole training set before splitting for cross-validation to prevent leakage.
+2. **Modular Evaluation:** Do not generate inline print statements for metrics. Create a reusable evaluation function (e.g., `evaluate_model(y_true, y_pred) -> dict`) that returns a standardized dictionary of metrics (RMSE, MAE, R²).
+3. **Type Hints & Docstrings:** Enforce standard Python type hints (e.g., `X: pd.DataFrame`, `y: pd.Series`) and provide brief Google-style docstrings for all custom functions and classes.
+4. **Configuration Separation:** Define hyperparameter grids and model settings as separate dictionary variables at the top of the file or in a config dict, rather than hardcoding them directly inside class instantiations.
