@@ -59,10 +59,11 @@ When generating code for model training, hyperparameter tuning, or evaluation:
 3. **Type Hints & Docstrings:** Enforce standard Python type hints (e.g., `X: pd.DataFrame`, `y: pd.Series`) and provide brief Google-style docstrings for all custom functions and classes.
 4. **Configuration Separation:** Define hyperparameter grids and model settings as separate dictionary variables at the top of the file or in a config dict, rather than hardcoding them directly inside class instantiations.
 
-
 # Jupyter Notebook Best Practices
 
 1. **Cell Modularity:** Keep cells atomic. Do not mix class definitions, data loading, and model training in a single cell.
 2. **State Management:** Avoid mutating DataFrames in place (`inplace=True`) to prevent kernel state confusion during out-of-order cell execution. Always return a new or copied DataFrame.
 3. **Visualization:** When generating plots, always include titles, axis labels, and a legend. Prefer `seaborn` or `matplotlib.pyplot`.
 4. **Notebook Output:** Do not generate massive terminal outputs. Use `.head()`, `.info()`, or `.describe()` instead of printing entire DataFrames.
+
+run the project cell by cell, not with nbconvert or similar tools.
