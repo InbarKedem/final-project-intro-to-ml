@@ -67,3 +67,5 @@ When generating code for model training, hyperparameter tuning, or evaluation:
 4. **Notebook Output:** Do not generate massive terminal outputs. Use `.head()`, `.info()`, or `.describe()` instead of printing entire DataFrames.
 
 run the project cell by cell, not with nbconvert or similar tools.
+
+all the imports should be in the beginning of the notebook
